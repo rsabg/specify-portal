@@ -72,7 +72,7 @@ sudo passwd rsabg
 
 // simple update script update_webportal.sh
 
-#!/bin/sh
+  #!/bin/sh
 
 cd /home/ubuntu/webportal-installer
 
@@ -90,24 +90,27 @@ crontab -e
 // example setup Apache <=> Tomcat reverse proxy
 
 sudo a2enmod proxy_http
+
 sudo apachectl restart
+
 cd /etc/apache2
+
 vi sites-enabled/000-default.conf
 
-# mod_proxy setup.
+// mod_proxy setup
+
 ProxyRequests Off
+
 ProxyPass / http://localhost:8080
+
 ProxyPassReverse / http://localhost:8080
 
 <Location "/">
-  # Configurations specific to this location. Add what you need.
-  # For instance, you can add mod_proxy_html directives to fix
-  # links in the HTML code. See link at end of this page about using
-  # mod_proxy_html.
 
-  # Allow access to this proxied URL location for everyone.
   Order allow,deny
+  
   Allow from all
+  
 </Location>
 
 
