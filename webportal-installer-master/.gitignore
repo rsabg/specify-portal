@@ -1,0 +1,8 @@
+/solr-*
+/unpacked-war/
+/build/
+/specify_exports/*
+!/specify_exports/README
+
+/.lastupdate
+/example.crontab
