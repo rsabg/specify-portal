@@ -1,11 +1,4 @@
-// Working install on AWS / Ubuntu 14.0.4 system
-
-// important references:
-
-// https://github.com/specify/web-asset-server
-
-// https://github.com/specify/webportal-installer
-
+# Working install on AWS / Ubuntu 14.0.4 system
 
 // install basic requirements for Web Portal
 
@@ -34,10 +27,10 @@ cd webportal-installer
 
 make clean && make
 
+sudo make install && sudo invoke-rc.d tomcat7 restart
+
 
 // install FTP for uploading new zip files
-
-sudo apt-get update
 
 sudo apt-get install vsftpd
 
@@ -57,6 +50,8 @@ sudo vi /etc/vsftpd.conf
 // chroot_local_user=YES
 
 // local_root=/home/ubuntu/webportal-installer/specify_exports
+
+// allow_writeable_chroot=YES
 
 // pasv_enable=YES
 
@@ -93,9 +88,36 @@ sudo passwd rsabg
 
 // create a cron job
 
-
 crontab -e
 
 // example: update every 5 minutes
 
 // */5 * * * * /home/ubuntu/update_portal.sh >> /home/ubuntu/update_portal.log 2>&1
+
+
+// example setup Apache <=> Tomcat reverse proxy
+
+sudo a2enmod proxy_http
+sudo apachectl restart
+cd /etc/apache2
+vi sites-enabled/000-default.conf
+
+# mod_proxy setup.
+ProxyRequests Off
+ProxyPass / http://localhost:8080
+ProxyPassReverse / http://localhost:8080
+
+<Location "/">
+  # Configurations specific to this location. Add what you need.
+  # For instance, you can add mod_proxy_html directives to fix
+  # links in the HTML code. See link at end of this page about using
+  # mod_proxy_html.
+
+  # Allow access to this proxied URL location for everyone.
+  Order allow,deny
+  Allow from all
+</Location>
+
+
+
+
