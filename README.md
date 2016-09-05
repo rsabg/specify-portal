@@ -4,13 +4,7 @@
 
 sudo apt-get update
 
-sudo apt-get install apache2
-
-sudo apt-get install tomcat7
-
-sudo apt-get install make python2.7 default-jdk unzip curl git
-
-sudo apt-get install virtualbox-guest-utils (VirtualBox only)
+sudo apt-get install apache2 tomcat7 make python2.7 default-jdk unzip curl git
 
 git clone https://github.com/specify/webportal-installer.git
 
@@ -39,29 +33,29 @@ sudo vi /etc/vsftpd.conf
 
 // CONFIGURE THESE SETTINGS IN vsftpd.conf
 
-// note: be sure to open ports 20,21 and 1024-1048 on your firewall
+// note: be sure to open ports 20,21 and 1024-1048 on your firewall for PASV connections
 
-// anonymous_enable=NO
+anonymous_enable=NO
 
-// local_enable=YES
+local_enable=YES
 
-// write_enable=YES
+write_enable=YES
 
-// chroot_local_user=YES
+chroot_local_user=YES
 
-// local_root=/home/ubuntu/webportal-installer/specify_exports
+local_root=/home/ubuntu/webportal-installer/specify_exports
 
-// allow_writeable_chroot=YES
+allow_writeable_chroot=YES
 
-// pasv_enable=YES
+pasv_enable=YES
 
-// pasv_min_port=1024
+pasv_min_port=1024
 
-// pasv_max_port=1048
+pasv_max_port=1048
 
-// pasv_address=rsaherbarium.org
+pasv_address=YOUR_DOMAIN
 
-// pasv_addr_resolve=YES
+pasv_addr_resolve=YES
 
 
 // restart the ftp server
@@ -75,16 +69,14 @@ sudo useradd -m rsabg -s /usr/sbin/nologin
 
 sudo passwd rsabg
 
-// 'jaowndi6'
-
 
 // simple update script update_webportal.sh
 
-// #!/bin/sh
+#!/bin/sh
 
-// cd /home/ubuntu/webportal-installer
+cd /home/ubuntu/webportal-installer
 
-// make && make update
+make && make update
 
 // create a cron job
 
